@@ -27,12 +27,12 @@ def error_handler(self, error_code=0, parameter=0):
         print(error_text)
 
 def receive_handler(payload, packet_length, packet_info):
-    print "received from %s payload: %s" % (packet_info.sender_id, payload)
+    print("received from %s payload: %s" % (packet_info.sender_id, payload))
 
 cli.set_receive(receive_handler)
 cli.set_error(error_handler)
 cli.start_client()
 
 while True:
-    print "pakets in outgoing queue: %s" % cli.send(35, "C123")
+    print("pakets in outgoing queue: %s" % cli.send(35, "C123"))
     time.sleep(.1)

@@ -102,7 +102,7 @@ class PjonBaseSerialClient(object):
 
     def discover_proxy(self):
         for com_port_name in serial_utils.get_serial_ports():
-            print("checking port: %s" % com_port_name)
+            print(("checking port: %s" % com_port_name))
             ser = serial.Serial(com_port_name, 115200, write_timeout=0.2, timeout=0.5)
             try:
                 if ser.closed:
@@ -125,7 +125,7 @@ class PjonBaseSerialClient(object):
                 hex_string = "".join("%02x" % b for b in packet_input)
 
                 #ser.write(hex_string.decode('hex'))
-                print("hex arr: %s" % packet_input)
+                print(("hex arr: %s" % packet_input))
 
                 print("writing")
                 #ser.flushInput()
@@ -142,7 +142,7 @@ class PjonBaseSerialClient(object):
                         break
                     resp += read_val
 
-                print("%s resp>%s<" % (com_port_name, resp))
+                print(("%s resp>%s<" % (com_port_name, resp)))
                 return resp
             except serial.SerialException:
                 import traceback
@@ -160,7 +160,7 @@ class PjonBaseSerialClient(object):
     def listen_serial(self, timeout=5):
         # for com_port_name in serial_utils.get_serial_ports():
         for com_port_name in ['COM31']:
-            print("checking port: %s" % com_port_name)
+            print(("checking port: %s" % com_port_name))
             ser = serial.Serial(com_port_name, 115200, write_timeout=0.2, timeout=0.5)
             try:
                 if ser.closed:

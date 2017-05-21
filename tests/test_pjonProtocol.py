@@ -26,10 +26,10 @@ class TestPjonProtocol(TestCase):
         for arg in args:
             log.debug("arg: %s" % arg)
         try:
-            for key, value in kwargs.iteritems():
+            for key, value in kwargs.items():
                 log.debug("kwarg: %s=%s" % (key, value))
         except AttributeError:
-            for key, value in kwargs.items():
+            for key, value in list(kwargs.items()):
                 log.debug("kwarg: %s=%s" % (key, value))
 
     def test_crc_should_be_calcualted_for_single_char_str(self):
@@ -114,7 +114,7 @@ class TestPjonProtocol(TestCase):
             single_packet = [chr(item) for item in [1, 9, 2, 45, 65, 65, 65, 65, 71]]
             multiple_packets = []
             packets_count = 50
-            for i in xrange(packets_count):
+            for i in range(packets_count):
                 multiple_packets.extend(single_packet)
 
             self.assertEquals(packets_count * len(single_packet), len(multiple_packets))
@@ -122,7 +122,7 @@ class TestPjonProtocol(TestCase):
             ser.read.side_effect = multiple_packets
             log.debug(multiple_packets)
             bytes_count_arr = []
-            for i in xrange(len(multiple_packets)+1):
+            for i in range(len(multiple_packets)+1):
                 bytes_count_arr.append(i)
 
             bytes_count_arr.reverse()
@@ -270,7 +270,7 @@ class TestPjonProtocol(TestCase):
         proto = pjon_protocol.PjonProtocol(1, strategy=serial_hw_strategy)
         proto.set_acknowledge(False)
         for i in range(20):
-            print(proto.send_string(35, "C123"))
+            print((proto.send_string(35, "C123")))
             time.sleep(0.1)
 
         self.assertEquals(pjon_protocol_constants.ACK, proto.send_string(35, "C123"))
@@ -294,7 +294,7 @@ class TestPjonProtocol(TestCase):
         '''
 
         for i in range(20):
-            print(proto.send_string(35, "C123", packet_header=4))  # [0, 0, 1]: Local bus  | No sender info included | Acknowledge requested
+            print((proto.send_string(35, "C123", packet_header=4)))  # [0, 0, 1]: Local bus  | No sender info included | Acknowledge requested
             time.sleep(0.1)
 
         self.assertEquals(pjon_protocol_constants.ACK, proto.send_string(35, "C123", packet_header=4))
@@ -402,7 +402,7 @@ class TestPjonProtocol(TestCase):
             multiple_packets = []
             pjon_protocol_constants.MAX_ATTEMPTS = 3
             packets_count = pjon_protocol_constants.MAX_ATTEMPTS + 1
-            for i in xrange(packets_count):
+            for i in range(packets_count):
                 multiple_packets.extend(single_packet)
 
             self.assertEquals(packets_count * len(single_packet), len(multiple_packets))
@@ -424,7 +424,7 @@ class TestPjonProtocol(TestCase):
 
                 ser.inWaiting.return_value = 1  # needed for python 3.5
 
-                for i in xrange(pjon_protocol_constants.MAX_ATTEMPTS):
+                for i in range(pjon_protocol_constants.MAX_ATTEMPTS):
                     proto.update()
 
                 self.assertEquals(2, len(proto.outgoing_packets))

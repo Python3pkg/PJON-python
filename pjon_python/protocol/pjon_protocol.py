@@ -237,7 +237,7 @@ class PjonProtocol(object):
         return self._bit_index_by_value[bit_value]
 
     def receive(self):
-        data = [None for item in xrange(pjon_protocol_constants.PACKET_MAX_LENGTH)]
+        data = [None for item in range(pjon_protocol_constants.PACKET_MAX_LENGTH)]
         state = 0
         packet_length = pjon_protocol_constants.PACKET_MAX_LENGTH
         CRC = 0
@@ -245,7 +245,7 @@ class PjonProtocol(object):
         includes_sender_info = False
         acknowledge_requested = False
         log.debug(">>> new packet assembly")
-        for i in xrange(pjon_protocol_constants.PACKET_MAX_LENGTH):
+        for i in range(pjon_protocol_constants.PACKET_MAX_LENGTH):
             log.debug(" >> i: %s" % i)
 
             data[i] = state = self._strategy.receive_byte()
@@ -378,7 +378,7 @@ class PjonProtocol(object):
             self.strategy.send_byte(sender_id)
             CRC = self.compute_crc_8_for_byte(sender_id, CRC)
 
-        for i in xrange(string_length):
+        for i in range(string_length):
             self.strategy.send_byte(string_to_send[i])
             CRC = self.compute_crc_8_for_byte(string_to_send[i], CRC)
 
